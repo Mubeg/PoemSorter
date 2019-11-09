@@ -1,0 +1,221 @@
+\hypertarget{PoemSorter_8c}{}\section{Файл Poem\+Sorter.\+c}
+\label{PoemSorter_8c}\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+
+
+Главный файл программы  
+
+
+{\ttfamily \#include $<$locale.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}Poem\+Sorter.\+h\char`\"{}}\newline
+Граф включаемых заголовочных файлов для Poem\+Sorter.\+c\+:
+% FIG 0
+\subsection*{Функции}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{PoemSorter_8c_ab796d2f3603195ef382ffe2ae215e972}\label{PoemSorter_8c_ab796d2f3603195ef382ffe2ae215e972}} 
+int {\bfseries main} (const int args, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\item 
+int \hyperlink{PoemSorter_8c_a6b064ea1b53265375abb1304443a2c78}{check\+\_\+str} (char $\ast$str, const int len)
+\item 
+void \hyperlink{PoemSorter_8c_a4fe3a19df51f9dbc915ea25a873bb369}{print\+\_\+tree\+\_\+direct} (struct \hyperlink{structnode}{node} $\ast$\hyperlink{structnode}{node}, F\+I\+LE $\ast$file)
+\item 
+void \hyperlink{PoemSorter_8c_a7cae16547a02c4d37f4dc8dda7118369}{skip\+\_\+spaces} (char $\ast$str, int $\ast$ptr, const int direction, const int len)
+\item 
+int \hyperlink{PoemSorter_8c_a65e5327bee4f7472f6ac2101bf73f4cc}{compare\+\_\+str\+\_\+direct} (char $\ast$str1, char $\ast$str2, const int len1, const int len2)
+\item 
+int \hyperlink{PoemSorter_8c_aaec350e45ece472d7478ade0de0db886}{compare\+\_\+str\+\_\+reverse} (char $\ast$str1, char $\ast$str2, const int len1, const int len2)
+\item 
+struct \hyperlink{structnode}{node} $\ast$ \hyperlink{PoemSorter_8c_ac3b8064cc3f9cfbee762d8a960c154f8}{node\+Alloc} (void)
+\item 
+int \hyperlink{PoemSorter_8c_ab7ff6c15f935d072a5118582cc40afd3}{add\+\_\+line} (int($\ast$compare)(char $\ast$, char $\ast$, const int, const int), struct \hyperlink{structnode}{node} $\ast$self, char $\ast$str, const int len)
+\item 
+void \hyperlink{PoemSorter_8c_a035524b8e1ee7c9a8009f1c53f83ad3a}{destruct} (struct \hyperlink{structnode}{node} $\ast$self)
+\item 
+struct \hyperlink{structnode}{node} $\ast$ \hyperlink{PoemSorter_8c_ab6a5aeee88c4860cb13d03da2f01d1fc}{init\+\_\+node} (void)
+\item 
+int \hyperlink{PoemSorter_8c_a06e99e109cf21cd40058082dbfda71d5}{fget\+Str} (F\+I\+LE $\ast$file, char str\mbox{[}$\,$\mbox{]}, const int maxlen)
+\item 
+int \hyperlink{PoemSorter_8c_a5f57df759bd13683509ba24629a11297}{read\+File\+Into\+Tree} (struct \hyperlink{structnode}{node} $\ast$tree, char file\+\_\+name\mbox{[}$\,$\mbox{]}, const int file\+\_\+name\+\_\+length)
+\end{DoxyCompactItemize}
+
+
+\subsection{Подробное описание}
+Главный файл программы 
+
+
+
+\subsection{Функции}
+\mbox{\Hypertarget{PoemSorter_8c_ab7ff6c15f935d072a5118582cc40afd3}\label{PoemSorter_8c_ab7ff6c15f935d072a5118582cc40afd3}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!add\+\_\+line@{add\+\_\+line}}
+\index{add\+\_\+line@{add\+\_\+line}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{add\+\_\+line()}{add\_line()}}
+{\footnotesize\ttfamily int add\+\_\+line (\begin{DoxyParamCaption}\item[{int($\ast$)(char $\ast$, char $\ast$, const int, const int)}]{compare,  }\item[{struct \hyperlink{structnode}{node} $\ast$}]{self,  }\item[{char $\ast$}]{str,  }\item[{const int}]{len }\end{DoxyParamCaption})}
+
+Добавляет строку стихотворения в дерево, оставляя его отсортированным 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\tt in}  & {\em compare} & Функция сравнения строк 1 / 0 / -\/1 \+: $>$ / = / $<$ \\
+\hline
+\mbox{\tt in}  & {\em self} & Указатель на вершину дерева \\
+\hline
+\mbox{\tt in}  & {\em $\ast$str} & Добавляемая строка \\
+\hline
+\mbox{\tt in}  & {\em len} & Длина строки \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 -\/ успех, 1 -\/ ошибка 
+\end{DoxyReturn}
+\mbox{\Hypertarget{PoemSorter_8c_a6b064ea1b53265375abb1304443a2c78}\label{PoemSorter_8c_a6b064ea1b53265375abb1304443a2c78}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!check\+\_\+str@{check\+\_\+str}}
+\index{check\+\_\+str@{check\+\_\+str}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{check\+\_\+str()}{check\_str()}}
+{\footnotesize\ttfamily int check\+\_\+str (\begin{DoxyParamCaption}\item[{char $\ast$}]{str,  }\item[{const int}]{len }\end{DoxyParamCaption})}
+
+Проверяет строку на наличие символов алфавита 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\tt in}  & {\em $\ast$str} & Строка \\
+\hline
+\mbox{\tt in}  & {\em len} & Длина строки \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+0 если символы есть, 1 если нет 
+\end{DoxyReturn}
+\mbox{\Hypertarget{PoemSorter_8c_a65e5327bee4f7472f6ac2101bf73f4cc}\label{PoemSorter_8c_a65e5327bee4f7472f6ac2101bf73f4cc}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!compare\+\_\+str\+\_\+direct@{compare\+\_\+str\+\_\+direct}}
+\index{compare\+\_\+str\+\_\+direct@{compare\+\_\+str\+\_\+direct}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{compare\+\_\+str\+\_\+direct()}{compare\_str\_direct()}}
+{\footnotesize\ttfamily int compare\+\_\+str\+\_\+direct (\begin{DoxyParamCaption}\item[{char $\ast$}]{str1,  }\item[{char $\ast$}]{str2,  }\item[{const int}]{len1,  }\item[{const int}]{len2 }\end{DoxyParamCaption})}
+
+Сравнивает строки с начала, игнорируя неалфавитные символы 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\tt in}  & {\em $\ast$str1} & Строка 1 \\
+\hline
+\mbox{\tt in}  & {\em $\ast$str2} & Строка 2 \\
+\hline
+\mbox{\tt in}  & {\em len1} & Длина строки 1 \\
+\hline
+\mbox{\tt in}  & {\em len2} & Длина строки 2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+1 / 0 / -\/1 \+: $>$ / = / $<$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{PoemSorter_8c_aaec350e45ece472d7478ade0de0db886}\label{PoemSorter_8c_aaec350e45ece472d7478ade0de0db886}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!compare\+\_\+str\+\_\+reverse@{compare\+\_\+str\+\_\+reverse}}
+\index{compare\+\_\+str\+\_\+reverse@{compare\+\_\+str\+\_\+reverse}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{compare\+\_\+str\+\_\+reverse()}{compare\_str\_reverse()}}
+{\footnotesize\ttfamily int compare\+\_\+str\+\_\+reverse (\begin{DoxyParamCaption}\item[{char $\ast$}]{str1,  }\item[{char $\ast$}]{str2,  }\item[{const int}]{len1,  }\item[{const int}]{len2 }\end{DoxyParamCaption})}
+
+Сравнивает строки с конца, игнорируя неалфавитные символы 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\tt in}  & {\em $\ast$str1} & Строка 1 \\
+\hline
+\mbox{\tt in}  & {\em $\ast$str2} & Строка 2 \\
+\hline
+\mbox{\tt in}  & {\em len1} & Длина строки 1 \\
+\hline
+\mbox{\tt in}  & {\em len2} & Длина строки 2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+1 / 0 / -\/1 \+: $>$ / = / $<$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{PoemSorter_8c_a035524b8e1ee7c9a8009f1c53f83ad3a}\label{PoemSorter_8c_a035524b8e1ee7c9a8009f1c53f83ad3a}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!destruct@{destruct}}
+\index{destruct@{destruct}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{destruct()}{destruct()}}
+{\footnotesize\ttfamily void destruct (\begin{DoxyParamCaption}\item[{struct \hyperlink{structnode}{node} $\ast$}]{self }\end{DoxyParamCaption})}
+
+Рекурсивно удаляет дерево 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\tt in}  & {\em self} & Указатель на вершину дерева \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{PoemSorter_8c_a06e99e109cf21cd40058082dbfda71d5}\label{PoemSorter_8c_a06e99e109cf21cd40058082dbfda71d5}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!fget\+Str@{fget\+Str}}
+\index{fget\+Str@{fget\+Str}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{fget\+Str()}{fgetStr()}}
+{\footnotesize\ttfamily int fget\+Str (\begin{DoxyParamCaption}\item[{F\+I\+LE $\ast$}]{file,  }\item[{char}]{str\mbox{[}$\,$\mbox{]},  }\item[{const int}]{maxlen }\end{DoxyParamCaption})}
+
+Получает строку из файла 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\tt in}  & {\em file} & Файл стихотворения \\
+\hline
+\mbox{\tt in}  & {\em maxlen} & Максимальная длина строки \\
+\hline
+\mbox{\tt out}  & {\em str\mbox{[}$\,$\mbox{]}} & Буфер для записи \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Длинну строки 
+\end{DoxyReturn}
+\mbox{\Hypertarget{PoemSorter_8c_ab6a5aeee88c4860cb13d03da2f01d1fc}\label{PoemSorter_8c_ab6a5aeee88c4860cb13d03da2f01d1fc}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!init\+\_\+node@{init\+\_\+node}}
+\index{init\+\_\+node@{init\+\_\+node}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{init\+\_\+node()}{init\_node()}}
+{\footnotesize\ttfamily struct \hyperlink{structnode}{node}$\ast$ init\+\_\+node (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Инициализирует вершину дерева \begin{DoxyReturn}{Возвращает}
+N\+U\+LL / Указатель на node 
+\end{DoxyReturn}
+\mbox{\Hypertarget{PoemSorter_8c_ac3b8064cc3f9cfbee762d8a960c154f8}\label{PoemSorter_8c_ac3b8064cc3f9cfbee762d8a960c154f8}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!node\+Alloc@{node\+Alloc}}
+\index{node\+Alloc@{node\+Alloc}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{node\+Alloc()}{nodeAlloc()}}
+{\footnotesize\ttfamily struct \hyperlink{structnode}{node}$\ast$ node\+Alloc (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Резервирует память под node \begin{DoxyReturn}{Возвращает}
+N\+U\+LL / Ссылку на память 
+\end{DoxyReturn}
+\mbox{\Hypertarget{PoemSorter_8c_a4fe3a19df51f9dbc915ea25a873bb369}\label{PoemSorter_8c_a4fe3a19df51f9dbc915ea25a873bb369}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!print\+\_\+tree\+\_\+direct@{print\+\_\+tree\+\_\+direct}}
+\index{print\+\_\+tree\+\_\+direct@{print\+\_\+tree\+\_\+direct}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{print\+\_\+tree\+\_\+direct()}{print\_tree\_direct()}}
+{\footnotesize\ttfamily void print\+\_\+tree\+\_\+direct (\begin{DoxyParamCaption}\item[{struct \hyperlink{structnode}{node} $\ast$}]{node,  }\item[{F\+I\+LE $\ast$}]{file }\end{DoxyParamCaption})}
+
+Рекурсивно выводит строки из вершин дерева \char`\"{}слева направо\char`\"{} 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\tt in}  & {\em node} & Вершина дерева / корень \\
+\hline
+\mbox{\tt in}  & {\em $\ast$file} & Файл вывода \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{PoemSorter_8c_a5f57df759bd13683509ba24629a11297}\label{PoemSorter_8c_a5f57df759bd13683509ba24629a11297}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!read\+File\+Into\+Tree@{read\+File\+Into\+Tree}}
+\index{read\+File\+Into\+Tree@{read\+File\+Into\+Tree}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{read\+File\+Into\+Tree()}{readFileIntoTree()}}
+{\footnotesize\ttfamily int read\+File\+Into\+Tree (\begin{DoxyParamCaption}\item[{struct \hyperlink{structnode}{node} $\ast$}]{tree,  }\item[{char}]{file\+\_\+name\mbox{[}$\,$\mbox{]},  }\item[{const int}]{file\+\_\+name\+\_\+length }\end{DoxyParamCaption})}
+
+Читает строку из файла и записывает её в дерево 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\tt in}  & {\em tree} & Указатель на корень дерева \\
+\hline
+\mbox{\tt in}  & {\em file\+\_\+name\mbox{[}$\,$\mbox{]}} & Название файла \\
+\hline
+\mbox{\tt in}  & {\em file\+\_\+name\+\_\+length} & Длина названия файла \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Информацию об успехе выполнения\+: 0 / F\+NF / A\+D\+D\+\_\+\+F\+A\+I\+L\+ED / F\+I\+L\+E\+\_\+\+O\+P\+E\+R\+\_\+\+P\+R\+O\+B\+L\+EM 
+\end{DoxyReturn}
+\mbox{\Hypertarget{PoemSorter_8c_a7cae16547a02c4d37f4dc8dda7118369}\label{PoemSorter_8c_a7cae16547a02c4d37f4dc8dda7118369}} 
+\index{Poem\+Sorter.\+c@{Poem\+Sorter.\+c}!skip\+\_\+spaces@{skip\+\_\+spaces}}
+\index{skip\+\_\+spaces@{skip\+\_\+spaces}!Poem\+Sorter.\+c@{Poem\+Sorter.\+c}}
+\subsubsection{\texorpdfstring{skip\+\_\+spaces()}{skip\_spaces()}}
+{\footnotesize\ttfamily void skip\+\_\+spaces (\begin{DoxyParamCaption}\item[{char $\ast$}]{str,  }\item[{int $\ast$}]{ptr,  }\item[{const int}]{direction,  }\item[{const int}]{len }\end{DoxyParamCaption})}
+
+Переставляет указатель ptr на следующий символ алфавита в строке 
+\begin{DoxyParams}[1]{Аргументы}
+\mbox{\tt in}  & {\em $\ast$str} & Строка \\
+\hline
+\mbox{\tt in}  & {\em direction} & N\+EG / P\+OS направление обхода строки \\
+\hline
+\mbox{\tt in}  & {\em len} & Длина строки \\
+\hline
+\mbox{\tt in,out}  & {\em $\ast$prt} & Указатель, \char`\"{}бегающий\char`\"{} по строке \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Возвращает}
+Количество корней 
+\end{DoxyReturn}

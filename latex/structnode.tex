@@ -1,0 +1,34 @@
+\hypertarget{structnode}{}\section{Структура node}
+\label{structnode}\index{node@{node}}
+
+
+{\ttfamily \#include $<$Poem\+Sorter.\+h$>$}
+
+
+
+Граф связей класса node\+:
+% FIG 0
+\subsection*{Открытые атрибуты}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{structnode_ab87bb77f53624928d8241d835150524e}\label{structnode_ab87bb77f53624928d8241d835150524e}} 
+char $\ast$ {\bfseries str}
+\item 
+\mbox{\Hypertarget{structnode_a3f3dc96b95e9ee02b79ff034a5175bee}\label{structnode_a3f3dc96b95e9ee02b79ff034a5175bee}} 
+int {\bfseries len}
+\item 
+\mbox{\Hypertarget{structnode_a3ce38490a651bfda86d88ff955e96abc}\label{structnode_a3ce38490a651bfda86d88ff955e96abc}} 
+struct \hyperlink{structnode}{node} $\ast$ {\bfseries left}
+\item 
+\mbox{\Hypertarget{structnode_a875f75abfe22103500535b179828e4e3}\label{structnode_a875f75abfe22103500535b179828e4e3}} 
+struct \hyperlink{structnode}{node} $\ast$ {\bfseries right}
+\end{DoxyCompactItemize}
+
+
+\subsection{Подробное описание}
+Вершина дерева / корень дерева~\newline
+Содержит\+: Указатели на дочерние вершины, собственную строку и её длину 
+
+Объявления и описания членов структуры находятся в файле\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{PoemSorter_8h}{Poem\+Sorter.\+h}\end{DoxyCompactItemize}
