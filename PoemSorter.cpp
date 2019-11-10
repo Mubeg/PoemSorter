@@ -44,8 +44,6 @@ int main(const int args, const char *argv[]){
 		return 1; 
 	}
 
-	//fwprintf(stderr, L"%d\n", text[2].size);
-
 	int answer = quick_sort_poem_with_qsort(text, text_size, compare_str_reverse_shell_qsort);
 	switch(answer){
 		case 0:
@@ -174,38 +172,17 @@ str_ptr make_text_must_free(Elem_t buff[], const int buff_size, int * const text
 
 	int num_lines = 0;
 
-	//printf("Ckeck\n");
-
-	//for(int i = 0 ; i < buff_size; i++){
-//		fwprintf(stderr, L"%d ", buff[i]);	
-//	}
-
-
-	//fwprintf(stderr, L"\n");
-
 	num_lines = change_ch1_to_ch2_and_count_in_ch_buff(Long_string('\n'), Long_string('\0'), buff, buff_size);
 
-	//for(int i = 0; i < buff_size; i++){
-	//	fwprintf(stderr, L"%d\n", buff[i]);
-	//	fflush(stderr);
-	//}
-
-	//printf("%d\n", num_lines);
-	
 	str_ptr text = nullptr;
 	text = (str_ptr) calloc(num_lines + 1, sizeof(str)); // text[num_lines].size = -1
 	if(!text){
 		fprintf(stderr, "Mem calloc for text in %s problem", __PRETTY_FUNCTION__);
 	}
 
-	//printf("Ckeck\n");
-
 	*text_size = fill_string_split_by_separator_from_ch_buff(text, Long_string('\0'), buff, buff_size);
 
-	//printf("%d\n", *text_size);
-
 	text[*text_size].size = -1;
-	//printf("Ckeck\n");
 	
 	return text;
 }
@@ -276,13 +253,10 @@ int fill_string_split_by_separator_from_ch_buff(str_ptr text, const Elem_t separ
 	text[0].str = buff;
 	Elem_t * last_ptr = buff;
 
-	//printf("Ckeck\n");
-
 	for(Elem_t * ptr = (Elem_t *) wmemchr(buff, separator, buff_size);
 	    ptr < buff + buff_size;
 	    ptr = (Elem_t *) wmemchr(last_ptr, separator, buff + buff_size - 1 - ptr)){
 		
-		//fwprintf(stderr, L"Ckeck[%p] %S\n\n", ptr, last_ptr);
 		if(ptr == nullptr)
 			break;
 
@@ -291,8 +265,6 @@ int fill_string_split_by_separator_from_ch_buff(str_ptr text, const Elem_t separ
 		text[text_ptr - 1].size = ptr - last_ptr + 1;
 		last_ptr = ptr + 1;
 	}
-
-	//printf("Ckeck\n");
 
 	return text_ptr - 1;
 }
@@ -332,25 +304,33 @@ int find_rythm_for_entered_line_and_proc(const str_ptr text, const int text_size
 	line_to_send.str = line;
 	line_to_send.size = wcslen(line);
 
-	str_ptr ans = find_rythm(&line_to_send, text, text_size);
-	if(!ans){
+
+	str_ptr ans[2*EPS_OKRESTNOST] = {}; //[2*(EPS_OKRESTNOST - 1) + 1 + 1]
+
+	bool found = false;
+	find_rythm(ans, &line_to_send, text, text_size, &found);
+	if(!found){
 		return MATCHING_STR_NF;
 	}
-	
-	printf("Your line:\n%" Long_str "\n", ans->str);
+
+	printf("\nYour lines:\n");
+	for(int i = 0; i < 2*EPS_OKRESTNOST; i++){
+		if(ans[i] != nullptr){
+			printf("%" Long_str "\n", ans[i]->str);
+		}
+	}
+	printf("\n");
 
 	free(line);
 
 	return 0;
 }
 
-str_ptr find_rythm(str_ptr line, const str_ptr text, const int text_size){ // uc
+void find_rythm(str_ptr *bsearch_answer, str_ptr line, const str_ptr text, const int text_size, bool *found){
 
 	assert(line      != nullptr);
 	assert(text      != nullptr);
 	assert(text_size >= 0      );
-
-	str_ptr bsearch_answer = nullptr;
 	
 	int right_border = text_size - 1;
 	int left_border  = 0;
@@ -371,24 +351,34 @@ str_ptr find_rythm(str_ptr line, const str_ptr text, const int text_size){ // uc
 		}
 	}
 
-
 	for(int i = 0; i < EPS_OKRESTNOST; i++){
-		if(middle + i < text_size && str_partially_match_reverse(line -> str, text[middle + i].str, line->size, text[middle + i].size)){
-			return text + middle + i;
+
+		if(middle + i < text_size){
+			int ans = str_partially_match_reverse(line -> str, text[middle + i].str, line->size, text[middle + i].size);
+
+			if(RYTHM_MIN_IDENTICAL <= ans && ans <= RYTHM_MAX_IDENTICAL){
+				bsearch_answer[2*i] = text + middle + i;
+				*found = true;
+			}
 		}
-		if(middle - i >= 0 && str_partially_match_reverse(line -> str, text[middle - i].str, line->size, text[middle - i].size)){
-			return text + middle - i;
-		}	
-	}
-	
-	return bsearch_answer;	
+		if(middle - i >= 0){
+			int ans = str_partially_match_reverse(line -> str, text[middle - i].str, line->size, text[middle - i].size);
+
+			if(RYTHM_MIN_IDENTICAL <= ans && ans <= RYTHM_MAX_IDENTICAL){
+				bsearch_answer[2*i + 1] = text + middle - i;
+				*found = true;
+			}
+		}
+	}	
 
 }
 
-bool str_partially_match_reverse(const Elem_t str1[], const Elem_t str2[], const int len1, const int len2){
+int str_partially_match_reverse(const Elem_t str1[], const Elem_t str2[], const int len1, const int len2){
 	
 	assert(str1 != nullptr);
 	assert(str2 != nullptr);
+
+	int counter = 0;
 
 	for(int ptr1 = len1 - 1, ptr2 = len2 - 1; ptr1 >= 0 && ptr2 >= 0; ptr1--, ptr2--){
 
@@ -402,12 +392,12 @@ bool str_partially_match_reverse(const Elem_t str1[], const Elem_t str2[], const
 		}
 
 		if(str1[ptr1] == str2[ptr2])
-			return true;		
+			counter++;		
 		else
-			return false;
+			return counter;
 	}
 	
-	return false;
+	return counter;
 }
 
 int compare_str_direct_shell_qsort(const void * str1, const void * str2){

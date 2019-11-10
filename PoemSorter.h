@@ -26,6 +26,8 @@ const int NO_RIGHTS = 8;
 const int EPS_OKRESTNOST = 3;
 const int MAX_LINE_LEN  = 100;
 const int MATCHING_STR_NF = 1;
+const int RYTHM_MIN_IDENTICAL = 2;
+const int RYTHM_MAX_IDENTICAL = 5;
 
 #define USING_WCHAR_T
 
@@ -109,10 +111,10 @@ int quick_sort_poem_with_qsort(str_ptr text, const int text_size, int (compare)(
 int find_rythm_for_entered_line_and_proc(const str_ptr text, const int text_size);
 
 
-str_ptr find_rythm(str_ptr line, const str_ptr text, const int text_size);
+void find_rythm(str_ptr *bsearch_answer, str_ptr line, const str_ptr text, const int text_size, bool *found);
 
 
-bool str_partially_match_reverse(const Elem_t str1[], const Elem_t str2[], const int len1, const int len2);
+int str_partially_match_reverse(const Elem_t str1[], const Elem_t str2[], const int len1, const int len2);
 
 
 int compare_str_direct_shell_qsort(const void * str1, const void * str2);
